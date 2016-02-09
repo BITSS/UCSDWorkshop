@@ -10,15 +10,19 @@
          % otherwise the current date is printed 
 
 \begin{document}
+\input{./StataScalarList.tex}
 \maketitle
 
 \section{Wait for it}
 
 This is where I introduce you to my amazingness.
+I'm going to do a little thing where I include numerical output from Stata.
+
+The mean of the price variable is $\meanprice$ and its standard deviation (rounded to one decimal point) is $\stddevprice$
 
 \subsection{Wait for it.}
 
-More text, and ... tables! I changed the table a bit.
+More text, and ... tables! 
 
 \begin{table}
 \caption{Made Automatically in Stata}
@@ -27,7 +31,7 @@ More text, and ... tables! I changed the table a bit.
 
 
  Table 2: Made Automatically in R
- \input{outputR.tex}
+ %\input{outputR.tex}
 
 
 \end{document}
