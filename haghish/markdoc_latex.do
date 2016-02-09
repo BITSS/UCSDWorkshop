@@ -1,4 +1,4 @@
-	cd "/Users/garret/Documents/Research/BITSS/WorkshopSlides/Annual2015/haghish" //change this for your computer
+	cd "C:\Users\garret\Box Sync\BITSS\1_Events\3_Workshops-Seminars\UCSD\UCSDWorkshop\haghish" //change this for your computer
 	cap qui log c
 	set linesize 70
 	set more off
