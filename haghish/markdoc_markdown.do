@@ -1,56 +1,60 @@
-	cd "C:\Users\garret\Box Sync\BITSS\1_Events\3_Workshops-Seminars\UCSD\UCSDWorkshop\haghish" //change this for your computer
-	capture quietly log close
-	set linesize 70
-	set more off
-	qui log using example1, replace  
-	
-	
-	sysuse auto, clear	
-	/***
-			Introduction to MarkDoc Stata Package
-			=====================================
-					
-			Writing symbols
-			---------------
-			
-			### Paragraph
-			__MarkDoc__ Converts _smcl_ logfile to Markdown txt file 
-			and allows the use of markdown symbols for adding text and 
-			styling the logfile. If Pandoc (a third-party software) is
-            installed, MarkDoc can also export the smclfile to other 
-			document formats including PDF, Docx, TEX, HTML, XHTML, XML,
-			EPUB, and several more formats. 
-					
-			This document provides an example about how to use MarkDoc
-			to add text to your logfile. To do so, I will use the Auto
-			dataset which is automatically installed with Stata.
-			
-			The mean price is 
-			***/ 
-	/**/qui summ(price)				
-	/**/disp `r(mean)'
-	
-			//And let's move on to the other section of commands...
-			
-	describe
-	list in 1/3
-	regress price mpg
-	
-			//#Other possibilities for writing text
-			// this is the end of the first example. Notice that you can 
-			// use two different sings for writing a comment in your 
-			// do-file and MarkDoc can read them both.
-			//to create a md file, you do not need to export the logfile
-			//to any other format. md is the default format of markdoc.
-			//however, you can also try to export it as HTML...
 
-					
-	qui log c
+     set linesize 90
+	 cd "C:\Users\garret\Box Sync\BITSS\1_Events\3_Workshops-Seminars\UCSD\UCSDWorkshop\haghish" //change this for your computer
+	 capture quietly log close
+     qui log using example, replace
+	 set more off
+
+             /*** 
+             Introduction to MarkDoc (heading 1) 
+             =================================== 
+    
+             Using Markdown (heading 2)
+             -------------------------- 
+    
+             Writing with __markdown__ syntax allows you to add text and graphs to
+             _smcl_ logfile and export it to a editable document format. I will demonstrate
+             the process by using the __Auto.dta__ dataset.
+
+             ###Get started with MarkDoc (heading 3)
+             I will open the dataset, list a few observations, and export a graph.
+             Then I will export the logfile to Microsoft Office docx format.
+             ***/
+
+     /***/ sysuse auto, clear 
+     /**/  list in 1/5               
+     histogram price
+     graph export graph.png,  width(400) replace
+	 
+			/***
+			You use two stars to include only output, and three stars to include only the command.
+			So two stars plus "quietly" gets you nothing.
+			You can also add numbers inline, but it's not quite as smooth as in R Markdown.
+			***/
+			
+	/**/quietly summ price
 	
-	/* Exporting in several formats */
-	markdoc example1, replace		/* exporting a markdown file */
-	*markdoc example1, replace export(html) 
-	*markdoc example1, replace export(odt)  
-	*markdoc example1, replace export(txt) 
-	*markdoc example1, replace export(epub) 
-	*markdoc example1, replace export(docx) //This seems to delete the earlier .md version
+	txt "Because you put it on the next command line to say the mean of Price variable is " %9.2f r(mean) " and SD is " %9.2f r(sd)
+
+             /*** 
+             Adding a graph or image in the report 
+             ====================================== 
+
+             Adding a graph using Markdown
+             -----------------------------
+    
+             In order to add a graph using Markdown, I export the graph in PNG format.
+             You can explain the graph in the "brackets" and define the file path in parentheses
+             
+             ![explain the graph](./graph.png)
+			 
+			 You can also export to a ton of different file types. (Thanks, pandoc!) So that's actually kind of cool.
+             ***/
+
+     qui log c
+
+    * markdoc example, replace export(html) install mathjax                        
+     *markdoc example, replace export(docx)
+     *markdoc example, replace export(tex) texmaster
+     markdoc example, replace
+     *markdoc example, replace export(epub)
